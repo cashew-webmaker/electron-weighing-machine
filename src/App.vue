@@ -10,7 +10,8 @@
                 <h3>We Eat Food First</h3>
                 <p>Then we click some buttons</p>
                 <button class="btn btn-info" @click="showModal()">Show Modal</button>
-                <button class="btn btn-success" @click="httpTest()">Send HTTP Test</button>
+                <button class="btn btn-success" @click="httpBasicTest()">Basic HTTP Test</button>
+                <button class="btn btn-success" @click="httpWithTokenTest()">HTTP with Token Test</button>
             </div>
         </div>
 
@@ -41,12 +42,27 @@
         data() {
             return {
                 wmgUrl: "http://38381e6d.ngrok.io",
-            }
+                wmgClientSecret: "WXdh3tyTiAuYBQ0wCkKMCQI8jtl819PJcddg1p21",
+                wmgKey: "revoked"
+            };
         },
         methods: {
-            httpTest() {
+
+            httpBasicTest() {
                 axios.get(this.wmgUrl + "/api/test").then((response) => {
                     console.log(response);
+                });
+            },
+            httpWithTokenTest() {
+                axios.request({
+                    url: this.wmgUrl +"/api/testWithToken",
+                    headers: {
+                        "Authorization" : "Bearer " + this.wmgKey
+                    }
+                }).then(response => {
+                    console.log(response);
+                }).catch(error => {
+                    console.log(error);
                 });
             },
             showModal() {

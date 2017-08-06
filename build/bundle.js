@@ -22119,6 +22119,7 @@ module.exports = function normalizeComponent (
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     mounted() {
@@ -22126,13 +22127,28 @@ module.exports = function normalizeComponent (
     },
     data() {
         return {
-            wmgUrl: "http://38381e6d.ngrok.io"
+            wmgUrl: "http://38381e6d.ngrok.io",
+            wmgClientSecret: "WXdh3tyTiAuYBQ0wCkKMCQI8jtl819PJcddg1p21",
+            wmgKey: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImFiZjBkMjEzMGFmOWY3OTk2N2ViMTVmNDEyMmMwMDcxODEwZGNhN2QzZDQ0Yjc1YTI3MDFjNThlMDJiNzhjYzc1MzM4NTlkNzQ4MjdlOTI1In0.eyJhdWQiOiIxIiwianRpIjoiYWJmMGQyMTMwYWY5Zjc5OTY3ZWIxNWY0MTIyYzAwNzE4MTBkY2E3ZDNkNDRiNzVhMjcwMWM1OGUwMmI3OGNjNzUzMzg1OWQ3NDgyN2U5MjUiLCJpYXQiOjE1MDIwMTA2MTcsIm5iZiI6MTUwMjAxMDYxNywiZXhwIjoxODE3NTQzNDE3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.rBzfTJUl0nc8O4EOXdoIua5TSuJMwAWVzYfCoonmbOZusQWLRqG2Dp7HhdF_70U7o08kGp9bAGK-iESJ6qBKQJu8KXKr8H9vxUVBjVDdCOPoGN3kyVxqKKH56jtbDZf34D0SouNsLEz7LHmGMfvSgUUyZ_E36OoCxNFJUkv9nX_eRmEtBUbC0l4mOg-oIwa5OPxH5HgFP03byMc-oYHk2qTr6n6ThDrjBoxcUlOothQU_0Q1PSZcvh9Rflc-jYtSkf1I5eyv-BwvsgjyKMsbZVi_ie9cw3yWHptbds50WlsCqxPf6Xa8BYKoSJFQBeKjD-vP_xVemyUusstziYcH1_mNtDJdb-A_RHYhD8wzuLpM9ugYbx2PlZwl0mybz65PrR07fJ3bCpY8B_eAeUhf6h42pApWBggyAX8gqNzgbHzKOP8U_P8Wt694TRzP72M2OvHVMJcWr_A64F3QuOlY1VKOdThp9ZF5nxDrpXwHUo9m6S2oMleM32jCyHURV3qKfK-fV6hhadOOqrJPyrkEmarpUzjZucCt_jTJYxevCXFCRePL_TefJHAUZtuiCCr-6jQ4tEtvuRulFZNK9KW0c72xXKCAjGYKG39HW_1z-3oNorBZvJPXYrdlE4xn5ea2nDz6NdEeVuKdEBj5kmIkMw9bmTQZqGXxaZT1rhtk3rk"
         };
     },
     methods: {
-        httpTest() {
+
+        httpBasicTest() {
             axios.get(this.wmgUrl + "/api/test").then(response => {
                 console.log(response);
+            });
+        },
+        httpWithTokenTest() {
+            axios.request({
+                url: this.wmgUrl + "/api/testWithToken",
+                headers: {
+                    "Authorization": "Bearer " + this.wmgKey
+                }
+            }).then(response => {
+                console.log(response);
+            }).catch(error => {
+                console.log(error);
             });
         },
         showModal() {
@@ -22164,10 +22180,17 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "btn btn-success",
     on: {
       "click": function($event) {
-        _vm.httpTest()
+        _vm.httpBasicTest()
       }
     }
-  }, [_vm._v("Send HTTP Test")])])]), _vm._v(" "), _vm._m(1)])
+  }, [_vm._v("Basic HTTP Test")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-success",
+    on: {
+      "click": function($event) {
+        _vm.httpWithTokenTest()
+      }
+    }
+  }, [_vm._v("HTTP with Token Test")])])]), _vm._v(" "), _vm._m(1)])
 }
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
